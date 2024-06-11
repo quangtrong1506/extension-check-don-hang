@@ -26,7 +26,7 @@
     "scripts": {
         "clean": "rmdir /s /q dist",
         "compile": "npx tsc",
-        "copy-assets": "robocopy ./ ./dist /E /XF tsconfig.json package.json package-lock.json *.ts /XD dist node_modules",
+        "copy-assets": "robocopy ./ ./dist /E /XF tsconfig.json package.json package-lock.json *.ts /XD dist node_modules images",
         "build": "npm run clean && npm run compile && npm run copy-assets"
     },
     "devDependencies": {
