@@ -113,7 +113,7 @@ const handle: () => void = async () => {
     }
     if (SETTINGS.auto_next_video) {
         let videoTag: HTMLVideoElement = document.querySelector('#ytd-player video') as HTMLVideoElement;
-        if (videoTag.duration - videoTag.currentTime < 1) {
+        if (videoTag && videoTag.duration - videoTag.currentTime < 1) {
             let button: HTMLButtonElement = document.querySelectorAll('.ytp-autonav-endscreen-upnext-button')[1] as HTMLButtonElement;
             if (button) button.click();
         }

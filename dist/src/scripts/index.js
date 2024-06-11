@@ -125,7 +125,7 @@ const handle = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     if (SETTINGS.auto_next_video) {
         let videoTag = document.querySelector('#ytd-player video');
-        if (videoTag.duration - videoTag.currentTime < 1) {
+        if (videoTag && videoTag.duration - videoTag.currentTime < 1) {
             let button = document.querySelectorAll('.ytp-autonav-endscreen-upnext-button')[1];
             if (button)
                 button.click();
