@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "[Youtube] Handle Ads for YouTube",
+    "description": "Skip ads, remove short, banner, auto next video,...",
+    "version": "1.0.0",
+    "action": {
+        "default_popup": "src/popup/index.html",
+        "default_icon": "src/popup/logo.png"
+    },
+    "background": {
+        "service_worker": "src/background/index.js"
+    },
+    "icons": {
+        "128": "logo.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["src/scripts/index.js"],
+            "matches": ["https://www.youtube.com/*", "https://youtube.com/*"]
+        }
+    ],
+    "permissions": ["storage"]
+}

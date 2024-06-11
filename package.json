@@ -1,0 +1,36 @@
+{
+    "name": "skip_ad_youtube",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "license": "AGPL-version-3.0",
+    "private": false,
+    "engines": {
+        "node": ">= 14.0.0",
+        "npm": ">= 6.0.0"
+    },
+    "homepage": "",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "bugs": "",
+    "keywords": [],
+    "author": {
+        "name": "TrongSaDoa",
+        "email": "quangtrong1506@gmail.com",
+        "url": "https://github.com/quangtrong1506"
+    },
+    "contributors": [],
+    "scripts": {
+        "clean": "rmdir /s /q dist",
+        "compile": "npx tsc",
+        "copy-assets": "robocopy ./ ./dist /E /XF tsconfig.json package.json package-lock.json *.ts /XD dist node_modules",
+        "build": "npm run clean && npm run compile && npm run copy-assets"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.268",
+        "typescript": "^5.4.5"
+    }
+}
