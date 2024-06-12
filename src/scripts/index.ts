@@ -60,6 +60,13 @@ const handle: () => void = async () => {
             else node.removeAttribute('style');
         });
     }
+    const Banner1Home: NodeListOf<HTMLDivElement> = document.querySelectorAll('ytd-ad-slot-renderer') as NodeListOf<HTMLDivElement>;
+    if (Banner1Home.length > 0) {
+        Banner1Home.forEach((node) => {
+            if (SETTINGS.hide_short_video) node.style.display = 'none';
+            else node.removeAttribute('style');
+        });
+    }
     const banner: HTMLDivElement = document.querySelector('ytd-banner-promo-renderer') as HTMLDivElement;
     if (banner)
         if (SETTINGS.hide_banner) banner.style.display = 'none';

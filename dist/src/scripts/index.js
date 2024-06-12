@@ -60,6 +60,15 @@ const handle = () => __awaiter(void 0, void 0, void 0, function* () {
                 node.removeAttribute('style');
         });
     }
+    const Banner1Home = document.querySelectorAll('ytd-ad-slot-renderer');
+    if (Banner1Home.length > 0) {
+        Banner1Home.forEach((node) => {
+            if (SETTINGS.hide_short_video)
+                node.style.display = 'none';
+            else
+                node.removeAttribute('style');
+        });
+    }
     const banner = document.querySelector('ytd-banner-promo-renderer');
     if (banner)
         if (SETTINGS.hide_banner)
