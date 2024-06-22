@@ -18,12 +18,19 @@ const saveDataPopup = (key, value) => {
 };
 const getDataPopup = (key) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield chrome.storage.local.get(key);
-    return result[key];
+    return (result[key] ||
+        {
+            skip_ads: true,
+            auto_next_video: true,
+            hide_banner: true,
+            hide_short_video: true,
+        });
 });
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     const settings = (yield getDataPopup('settings'));
     document.querySelectorAll('.content input').forEach((element) => {
         const InputTag = element;
+        console.log(InputTag); //27
         InputTag.checked = settings[InputTag.id];
         element.addEventListener('input', (event) => {
             const InputTag = event.target;

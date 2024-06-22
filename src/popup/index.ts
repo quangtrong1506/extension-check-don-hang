@@ -15,13 +15,22 @@ const saveDataPopup = (key: string, value: unknown) => {
 };
 const getDataPopup = async (key: string) => {
     const result = await chrome.storage.local.get(key);
-    return result[key];
+    return (
+        result[key] ||
+        ({
+            skip_ads: true,
+            auto_next_video: true,
+            hide_banner: true,
+            hide_short_video: true,
+        } as ISettings)
+    );
 };
 
 window.onload = async () => {
     const settings: ISettings = (await getDataPopup('settings')) as ISettings;
     document.querySelectorAll('.content input').forEach((element) => {
         const InputTag: HTMLInputElement = element as HTMLInputElement;
+        console.log(InputTag); //27
         InputTag.checked = settings[InputTag.id as TKey] as boolean;
         element.addEventListener('input', (event) => {
             const InputTag: HTMLInputElement = event.target as HTMLInputElement;
