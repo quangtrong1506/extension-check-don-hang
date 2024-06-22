@@ -18,13 +18,17 @@ const saveDataPopup = (key, value) => {
 };
 const getDataPopup = (key) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield chrome.storage.local.get(key);
-    return (result[key] ||
-        {
+    if (!result[key]) {
+        let newData = {
             skip_ads: true,
             auto_next_video: true,
             hide_banner: true,
             hide_short_video: true,
-        });
+        };
+        saveDataPopup(key, newData);
+        return newData;
+    }
+    return result[key];
 });
 window.onload = () => __awaiter(void 0, void 0, void 0, function* () {
     const settings = (yield getDataPopup('settings'));

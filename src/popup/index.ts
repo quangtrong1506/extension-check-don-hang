@@ -15,15 +15,17 @@ const saveDataPopup = (key: string, value: unknown) => {
 };
 const getDataPopup = async (key: string) => {
     const result = await chrome.storage.local.get(key);
-    return (
-        result[key] ||
-        ({
+    if (!result[key]) {
+        let newData = {
             skip_ads: true,
             auto_next_video: true,
             hide_banner: true,
             hide_short_video: true,
-        } as ISettings)
-    );
+        } as ISettings;
+        saveDataPopup(key, newData);
+        return newData;
+    }
+    return result[key];
 };
 
 window.onload = async () => {
