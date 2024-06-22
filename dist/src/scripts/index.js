@@ -38,7 +38,9 @@ const checkStatus = () => __awaiter(void 0, void 0, void 0, function* () {
     if (id) {
         video.id = id;
         video.list.id = (_b = arr.find((text) => text.match('list='))) === null || _b === void 0 ? void 0 : _b.split('=')[1];
-        video.list.index = parseInt(((_c = arr.find((text) => text.match('index='))) === null || _c === void 0 ? void 0 : _c.split('=')[1]) || ((_d = arr.find((text) => text.match('start_radio='))) === null || _d === void 0 ? void 0 : _d.split('=')[1]) || '0');
+        video.list.index = parseInt(((_c = arr.find((text) => text.match('index='))) === null || _c === void 0 ? void 0 : _c.split('=')[1]) ||
+            ((_d = arr.find((text) => text.match('start_radio='))) === null || _d === void 0 ? void 0 : _d.split('=')[1]) ||
+            '0');
     }
 });
 const saveData = (key, value) => {
@@ -52,42 +54,41 @@ const getData = (key) => __awaiter(void 0, void 0, void 0, function* () {
 const handle = () => __awaiter(void 0, void 0, void 0, function* () {
     //Home page
     const shorts = document.querySelectorAll('ytd-rich-shelf-renderer');
-    if (shorts.length > 0) {
-        shorts.forEach((node) => {
-            if (SETTINGS.hide_short_video)
-                node.style.display = 'none';
-            else
-                node.removeAttribute('style');
-        });
-    }
+    shorts.forEach((node) => {
+        if (SETTINGS.hide_short_video)
+            node.style.display = 'none';
+        else
+            node.removeAttribute('style');
+    });
     const Banner1Home = document.querySelectorAll('ytd-ad-slot-renderer');
-    if (Banner1Home.length > 0) {
-        Banner1Home.forEach((node) => {
-            if (SETTINGS.hide_short_video)
-                node.style.display = 'none';
-            else
-                node.removeAttribute('style');
-        });
-    }
-    const banner = document.querySelector('ytd-banner-promo-renderer');
-    if (banner)
-        if (SETTINGS.hide_banner)
-            banner.style.display = 'none';
+    Banner1Home.forEach((node) => {
+        if (SETTINGS.hide_short_video)
+            node.style.display = 'none';
         else
-            banner.removeAttribute('style');
-    const banner2 = document.querySelector('ytd-statement-banner-renderer');
-    if (banner2)
+            node.removeAttribute('style');
+    });
+    const banners = document.querySelectorAll('ytd-banner-promo-renderer');
+    banners.forEach((node) => {
         if (SETTINGS.hide_banner)
-            banner2.style.display = 'none';
+            node.style.display = 'none';
         else
-            banner2.removeAttribute('style');
+            node.removeAttribute('style');
+    });
+    const banners2 = document.querySelectorAll('ytd-statement-banner-renderer');
+    banners2.forEach((node) => {
+        if (SETTINGS.hide_banner)
+            node.style.display = 'none';
+        else
+            node.removeAttribute('style');
+    });
     // Banner quảng cáo có gắn video
-    const banner3Home = document.querySelector('ytd-ad-slot-renderer');
-    if (banner3Home)
+    const banner3Home = document.querySelectorAll('ytd-ad-slot-renderer');
+    banner3Home.forEach((node) => {
         if (SETTINGS.hide_banner)
-            banner3Home.style.display = 'none';
+            node.style.display = 'none';
         else
-            banner3Home.removeAttribute('style');
+            node.removeAttribute('style');
+    });
     const banner4Home = document.querySelector('#masthead-ad');
     if (banner4Home)
         if (SETTINGS.hide_banner)
@@ -95,18 +96,28 @@ const handle = () => __awaiter(void 0, void 0, void 0, function* () {
         else
             banner4Home.removeAttribute('style');
     //? Watch
-    const banner3Top = document.querySelector('ytd-player-legacy-desktop-watch-ads-renderer');
-    if (banner3Top)
+    const banner3Top = document.querySelectorAll('ytd-player-legacy-desktop-watch-ads-renderer');
+    banner3Top.forEach((node) => {
         if (SETTINGS.hide_banner)
-            banner3Top.style.display = 'none';
+            node.style.display = 'none';
         else
-            banner3Top.removeAttribute('style');
-    const shorts2Watch = document.querySelector('ytd-reel-shelf-renderer');
-    if (shorts2Watch)
-        if (SETTINGS.hide_short_video)
-            shorts2Watch.style.display = 'none';
+            node.removeAttribute('style');
+    });
+    const shorts2Watch = document.querySelectorAll('ytd-reel-shelf-renderer');
+    shorts2Watch.forEach((node) => {
+        if (SETTINGS.hide_banner)
+            node.style.display = 'none';
         else
-            shorts2Watch.removeAttribute('style');
+            node.removeAttribute('style');
+    });
+    //Search
+    const qcSearch = document.querySelectorAll('ytd-in-feed-ad-layout-renderer.ytd-ad-slot-renderer');
+    qcSearch.forEach((node) => {
+        if (SETTINGS.hide_banner)
+            node.style.display = 'none';
+        else
+            node.removeAttribute('style');
+    });
     // Handle Ads
     if (SETTINGS.skip_ads) {
         // loading = true;
@@ -153,5 +164,5 @@ setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
         SETTINGS.hide_short_video = settings.hide_short_video;
         SETTINGS.auto_next_video = settings.auto_next_video;
     }
-}), 1000);
+}), 500);
 //ytp-autonav-endscreen-upnext-button ytp-autonav-endscreen-upnext-cancel-button ytp-autonav-endscreen-upnext-button-rounded
