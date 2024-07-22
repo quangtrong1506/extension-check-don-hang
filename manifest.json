@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "[Youtube] Handle Ads for YouTube",
-    "description": "Skip ads, remove short, banner, auto next video,...",
+    "name": "Giao Hàng Tiết kiệm",
+    "description": "Quản lý đơn hàng giao hàng tiết kiệm",
     "version": "1.0.0",
     "action": {
         "default_popup": "src/popup/index.html",
@@ -13,11 +13,12 @@
     "icons": {
         "128": "logo.png"
     },
+    "host_permissions": ["*://*.stackoverflow.com/*", "*://stackoverflow.com/*"],
     "content_scripts": [
         {
             "js": ["src/scripts/index.js"],
-            "matches": ["https://www.youtube.com/*", "https://youtube.com/*"]
+            "matches": ["https://stackoverflow.com/*"]
         }
     ],
-    "permissions": ["storage"]
+    "permissions": ["cookies", "storage", "contextMenus", "tabs", "activeTab"]
 }

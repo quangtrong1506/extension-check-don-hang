@@ -1,42 +1,75 @@
-interface ISettings {
-    skip_ads?: boolean;
-    hide_banner?: boolean;
-    hide_short_video?: boolean;
-    auto_next_video?: boolean;
-}
-type TKey = keyof ISettings;
-const handleChange = async (key: TKey, value: boolean) => {
-    const settings: ISettings = (await getDataPopup('settings')) as ISettings;
-    settings[key] = value;
-    saveDataPopup('settings', settings);
+const KEY_COOKIE = 'user_dev';
+const WEBSITE_URL = 'https://stackoverflow.com';
+const COOKIE_EXPIRES = 7;
+
+const getUserCookie = async () => {
+    const c = await chrome.cookies.get({ name: KEY_COOKIE, url: WEBSITE_URL });
+    return c;
 };
-const saveDataPopup = (key: string, value: unknown) => {
-    chrome.storage.local.set({ [key]: value });
+
+const setUserCookie = (value: string) => {
+    const expiresDate = new Date();
+    expiresDate.setTime(expiresDate.getTime() + COOKIE_EXPIRES * 24 * 60 * 60 * 1000);
+    chrome.cookies.set({
+        url: WEBSITE_URL,
+        name: KEY_COOKIE,
+        value: value,
+        path: '/',
+        expirationDate: expiresDate.getTime(),
+    });
 };
-const getDataPopup = async (key: string) => {
-    const result = await chrome.storage.local.get(key);
-    if (!result[key]) {
-        let newData = {
-            skip_ads: true,
-            auto_next_video: true,
-            hide_banner: true,
-            hide_short_video: true,
-        } as ISettings;
-        saveDataPopup(key, newData);
-        return newData;
+
+const clearUserCookie = () => {
+    chrome.cookies.remove({ name: KEY_COOKIE, url: WEBSITE_URL });
+};
+
+const onLogin = async () => {
+    const username = document.getElementById('username') as HTMLInputElement;
+    const password = document.getElementById('password') as HTMLInputElement;
+    // Call API to login
+    if (username.value !== 'admin') {
+        const errorMessageElement = document.getElementById('username-error-message');
+        if (errorMessageElement) {
+            errorMessageElement.textContent = 'Tài khoản không tồn tại';
+        }
+        return;
     }
-    return result[key];
+    if (password.value !== '12345') {
+        const errorMessageElement = document.getElementById('password-error-message');
+        if (errorMessageElement) {
+            errorMessageElement.textContent = 'Mật khẩu không đúng';
+        }
+        return;
+    }
+    //Call API
+    alert('Đăng nhập thành công');
+    //Set TOKEN vào COOKIE
+    setUserCookie('true');
+    showUI();
+};
+const showUI = async () => {
+    const user = await getUserCookie();
+    console.log(user);
+    const a = document.getElementById('login');
+    const b = document.getElementById('logged');
+    if (user && Object.keys(user).length > 0 && a && b) {
+        b.style.display = 'block';
+        a.style.display = 'none';
+    } else if (a && b) {
+        a.style.display = 'block';
+        b.style.display = 'none';
+    }
 };
 
 window.onload = async () => {
-    const settings: ISettings = (await getDataPopup('settings')) as ISettings;
-    document.querySelectorAll('.content input').forEach((element) => {
-        const InputTag: HTMLInputElement = element as HTMLInputElement;
-        console.log(InputTag); //27
-        InputTag.checked = settings[InputTag.id as TKey] as boolean;
-        element.addEventListener('input', (event) => {
-            const InputTag: HTMLInputElement = event.target as HTMLInputElement;
-            handleChange(InputTag?.id as TKey, InputTag?.checked);
-        });
+    showUI();
+    document.getElementById('form-login')?.addEventListener('submit', (event: any) => {
+        event.preventDefault();
+        onLogin();
+    });
+    document.getElementById('logout-btn')?.addEventListener('click', async () => {
+        console.log('logout');
+        await clearUserCookie();
+        showUI();
     });
 };

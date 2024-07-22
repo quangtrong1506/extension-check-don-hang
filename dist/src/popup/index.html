@@ -5,39 +5,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Popup</title>
         <link rel="stylesheet" href="style.css" />
-        <script src="index.js"></script>
+        <script src="index.js" type="module"></script>
     </head>
     <body>
-        <h1 class="header">Cài đặt</h1>
-        <div class="content">
-            <div class="item">
-                <label class="checkbox">
-                    <span>Tự bỏ qua QC</span>
-                    <input type="checkbox" id="skip_ads" />
-                    <span class="checkmark"></span>
-                </label>
+        <div id="login" style="display: none">
+            <h1 class="header">Đăng nhập</h1>
+            <div class="content">
+                <form id="form-login" action="#" method="post">
+                    <div class="input-group">
+                        <label for="username">Tên đăng nhập:</label>
+                        <input type="text" id="username" required />
+                        <br />
+                        <span id="username-error-message"></span>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" id="password" required />
+                        <br />
+                        <span id="password-error-message"></span>
+                    </div>
+                    <button type="submit">Đăng nhập</button>
+                    <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                </form>
             </div>
-            <div class="item">
-                <label class="checkbox">
-                    <span>Ẩn QC Banner</span>
-                    <input type="checkbox" id="hide_banner" />
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div class="item">
-                <label class="checkbox">
-                    <span>Ẩn Short Videos & Gợi ý</span>
-                    <input type="checkbox" id="hide_short_video" />
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-            <div class="item">
-                <label class="checkbox">
-                    <span>Tự Next Video</span>
-                    <input type="checkbox" id="auto_next_video" />
-                    <span class="checkmark"></span>
-                </label>
-            </div>
+        </div>
+        <div id="logged" style="display: none">
+            <h3>Đã đăng nhập</h3>
+            <button id="logout-btn">Đăng xuất</button>
         </div>
     </body>
 </html>
